@@ -6,8 +6,8 @@
 #  --env OLLAMA_URL=http://$OLLAMA_HOST:11434
 export OLLAMA_HOST=192.168.1.252
 podman run -it \
- --user 1000 \
- -v ~/.llama:/root/.llama \
+ --user 1001 \
+ -v ~/.llama:/root/.llama:z \
  --network=host \
  docker.io/llamastack/distribution-starter:0.3.3 \
  --port 8321
