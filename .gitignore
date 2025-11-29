@@ -1,0 +1,5 @@
+start-llama.log
+start-ollama.log
+venv/
+.venv/
+ignore/

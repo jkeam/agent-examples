@@ -1,0 +1,7 @@
+[project]
+name = "agent-examples"
+version = "0.1.0"
+description = "Examples of how to use Llamastack to build agents"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = []
