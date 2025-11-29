@@ -19,3 +19,12 @@ Examples of simple agents using Llamastack.
     ```shell
     nohup ./start-llama.sh > ./start-llama.log 2>&1 &
     ```
+
+3. Verify
+
+    ```shell
+    # test model
+    uv run llama-stack-client configure --endpoint http://localhost:8321 --api-key none
+    # see all models
+    uv run llama-stack-client models list
+    ```
