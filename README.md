@@ -17,7 +17,7 @@ Examples of simple agents using Llamastack.
 2. Wrap model with Llama Server in another terminal
 
     ```shell
-    nohup ./start-llama.sh > ./start-llama.log 2>&1 &
+    ./start-llama.sh
     ```
 
 3. Verify
