@@ -1,5 +1,6 @@
 start-llama.log
 start-ollama.log
+start-ollama-model.log
 venv/
 .venv/
 ignore/
