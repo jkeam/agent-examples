@@ -1,0 +1,38 @@
+# run.yml - Llama Stack Configuration to use OpenAI as an Inference Provider
+
+# 1. Define the Inference Provider
+inference_provider:
+  # The provider name can be anything descriptive.
+  name: "openai-api"
+  # This tells Llama Stack to use its built-in OpenAI provider logic.
+  provider_type: "openai"
+  # You can pass configuration parameters specific to the provider here.
+  # Llama Stack will automatically look for the OPENAI_API_KEY environment 
+  # variable when using the 'openai' provider_type.
+  config:
+    # This section is generally empty for the OpenAI provider 
+    # as it relies on the environment variable for the key.
+    # Optionally, you could set an explicit API key here, but env var is better.
+    # api_key: ${OPENAI_API_KEY} 
+
+# 2. Define the LLM Models available through this provider
+models:
+  - name: "gpt-4o"
+    identifier: "openai/gpt-4o"
+    # The 'type' must be 'llm' for Large Language Models
+    type: "llm"
+    # Map the Llama Stack identifier to the actual OpenAI model name
+    config:
+      model_name: "gpt-4o"
+      
+  - name: "gpt-4-turbo"
+    identifier: "openai/gpt-4-turbo"
+    type: "llm"
+    config:
+      model_name: "gpt-4-turbo"
+
+  - name: "gpt-3.5-turbo"
+    identifier: "openai/gpt-3.5-turbo"
+    type: "llm"
+    config:
+      model_name: "gpt-3.5-turbo-0125"

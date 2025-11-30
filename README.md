@@ -6,6 +6,10 @@ Examples of simple agents using Llamastack.
 
 ### Server
 
+#### Local Model
+
+Running ollama locally with Llamastack Server.
+
 1. Serve model using ollama using one terminal
 
     ```shell
@@ -28,3 +32,12 @@ Examples of simple agents using Llamastack.
     # see all models
     uv run llama-stack-client models list
     ```
+
+#### OpenAI Facade
+
+Running Llamastack Server as a facade to OpenAI.
+
+```shell
+# update run.yaml with your values
+export OPENAI_API_KEY="YOUR_ACTUAL_OPENAI_API_KEY" uv run --with llama-stack llama stack run run.yaml
+```
