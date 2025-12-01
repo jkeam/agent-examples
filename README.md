@@ -41,3 +41,7 @@ Running Llamastack Server as a facade to OpenAI.
 # update run.yaml with your values
 export OPENAI_API_KEY="YOUR_ACTUAL_OPENAI_API_KEY" uv run --with llama-stack llama stack run run.yaml
 ```
+
+## References
+
+1. [Start run.yaml](https://github.com/llamastack/llama-stack/blob/a7c7c724679b2c19683925d78c33b63e79d2aff3/src/llama_stack/distributions/starter/run.yaml)
