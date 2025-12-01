@@ -1,12 +1,17 @@
-from llama_stack_client import LlamaStackClient
-from llama_stack_client.types import ChatCompletionMessage, Tool
+from llama_stack_client import LlamaStackClient, AgentEventLogger
+from llama_stack_client.lib.agents.agent import Agent
 
 LLAMA_STACK_URL = "http://localhost:8321" 
-MODEL_ID = "Llama3.1-8B-Instruct" # Or another model ID available on your stack
+MODEL_ID = "openai/gpt-4o"
 
-# 1. Define the tools as regular Python functions
+# Define the tools as regular Python functions
 def get_favorite_color(city: str, country: str) -> str:
-    """Returns the favorite color for a person in the specified city and country."""
+    """
+    Returns the favorite color for a person given their City and Country.
+
+    :param city: The name of the city. This parameter is required.
+    :param country: The country the city is in. This parameter is required.
+    """
     if city == "Ottawa" and country == "Canada":
         return "the favoriteColorTool returned that the favorite color for Ottawa Canada is black"
     if city == "Montreal" and country == "Canada":
@@ -14,7 +19,12 @@ def get_favorite_color(city: str, country: str) -> str:
     return "the favoriteColorTool could not determine a favorite color for that location"
 
 def get_favorite_hockey_team(city: str, country: str) -> str:
-    """Returns the favorite hockey team for a person in the specified city and country."""
+    """
+    Returns the favorite hockey team for a person given their City and Country.
+
+    :param city: The name of the city. This parameter is required.
+    :param country: The country the city is in. This parameter is required.
+    """
     if city == "Ottawa" and country == "Canada":
         return "the favoriteHockeyTool returned that the favorite hockey team for Ottawa Canada is The Ottawa Senators"
     if city == "Montreal" and country == "Canada":
@@ -22,52 +32,26 @@ def get_favorite_hockey_team(city: str, country: str) -> str:
     return "the favoriteHockeyTool could not determine a favorite hockey team for that location"
 
 client = LlamaStackClient(base_url=LLAMA_STACK_URL)
-
-# --- Tool Definition (Schema for the LLM) ---
-# Llama Stack requires the tools to be defined with names, descriptions, and parameters.
-# This structure is often auto-generated or manually created to match the function signature.
-
-available_tools = [
-    Tool(
-        tool_name="get_favorite_color",
-        description="Returns the favorite color for a person given their City and Country",
-        parameters={
-            "city": {"param_type": "string", "required": True},
-            "country": {"param_type": "string", "required": True},
-        }
+agent = Agent(
+    client,
+    model=MODEL_ID,
+    instructions=(
+        "You are a friendly bot using your tools to find favorite colors and hockey teams."
     ),
-    Tool(
-        tool_name="get_favorite_hockey_team",
-        description="Returns the favorite hockey team for a person given their City and Country",
-        parameters={
-            "city": {"param_type": "string", "required": True},
-            "country": {"param_type": "string", "required": True},
-        }
-    ),
-]
+    tools=[get_favorite_color, get_favorite_hockey_team],
+)
 
-# --- Agentic Execution ---
-user_question = "I live in Ottawa, Canada. What is my favorite color and favorite hockey team?"
-
-messages = [
-    ChatCompletionMessage(role="user", content=user_question)
-]
-
-print(f"QUESTION: {user_question}\n")
-
-# Call the inference chat completion endpoint, passing the tools
-# The model will internally decide if it needs to call one or both tools.
 try:
-    response = client.inference.chat_completion(
-        messages=messages,
-        model_id=MODEL_ID,
-        tools=available_tools,
-        # The model will use the tool definitions to decide on tool calls, 
-        # then the client/executor handles the function execution (defined in step 1), 
-        # and sends the result back to the model.
+    user_question = "I live in Ottawa, Canada. What is my favorite color and favorite hockey team?"
+    session_id = agent.create_session("colorteam-session")
+    response = agent.create_turn(
+        messages=[
+            {"role": "user", "content": user_question}
+        ],
+        session_id=session_id
     )
-
-    print(f"AGENT RESPONSE: {response.text}")
+    for log in AgentEventLogger().log(response):
+        print(log, end="")
 
 except Exception as e:
     print(f"An error occurred: {e}")
