@@ -21,7 +21,7 @@ Running ollama locally with Llamastack Server.
 2. Wrap model with Llama Server in another terminal
 
     ```shell
-    ./start-llama.sh
+    ./start-llama-ollama.sh
     ```
 
 3. Verify
@@ -38,8 +38,8 @@ Running ollama locally with Llamastack Server.
 Running Llamastack Server as a facade to OpenAI.
 
 ```shell
-# update run.yaml with your values
-export OPENAI_API_KEY="YOUR_ACTUAL_OPENAI_API_KEY" uv run --with llama-stack llama stack run run.yaml
+export OPENAI_API_KEY="YOUR_ACTUAL_OPENAI_API_KEY"
+./start-llama-openai.sh
 ```
 
 ## References
