@@ -61,8 +61,8 @@ All of the client examples below require that the Llama Stack server is running.
 
 #### Simple Agent
 
-These agents uses a few very simple function tools,
-but this demonstrates how the agent chooses which tools to call
+These agents use very simple function tools,
+but demonstrates how the agents choose which tools to call
 based on what the user asked.
 
 ```shell
