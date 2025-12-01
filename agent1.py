@@ -42,7 +42,8 @@ agent = Agent(
 )
 
 try:
-    user_question = "I live in Ottawa, Canada. What is my favorite color and favorite hockey team?"
+    user_question = "\nI live in Ottawa, Canada. What is my favorite color and favorite hockey team?\n\n"
+    print(f"User question: {user_question}")
     session_id = agent.create_session("colorteam-session")
     response = agent.create_turn(
         messages=[

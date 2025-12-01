@@ -55,6 +55,20 @@ uv run llama-stack-client configure --endpoint http://localhost:8321 --api-key n
 uv run llama-stack-client models list
 ```
 
+### Client
+
+All of the client examples below require that the Llama Stack server is running.
+
+#### Simple Agent
+
+This agent uses a few very simple function tools,
+but this demonstrates how the agent chooses which tools to call
+based on what the user asked.
+
+```shell
+uv run python ./agent1.py
+```
+
 ## References
 
 1. Llama Stack Starter [run.yaml](https://github.com/llamastack/llama-stack/blob/a7c7c724679b2c19683925d78c33b63e79d2aff3/src/llama_stack/distributions/starter/run.yaml)
