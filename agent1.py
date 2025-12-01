@@ -42,8 +42,8 @@ agent = Agent(
 )
 
 try:
-    user_question = "\nI live in Ottawa, Canada. What is my favorite color and favorite hockey team?\n\n"
-    print(f"User question: {user_question}")
+    user_question = "I live in Ottawa, Canada. What is my favorite color and favorite hockey team?"
+    print(f"\nUser question: {user_question}\n\n")
     session_id = agent.create_session("colorteam-session")
     response = agent.create_turn(
         messages=[
@@ -53,7 +53,6 @@ try:
     )
     for log in AgentEventLogger().log(response):
         print(log, end="")
-
 except Exception as e:
     print(f"An error occurred: {e}")
 

@@ -61,12 +61,13 @@ All of the client examples below require that the Llama Stack server is running.
 
 #### Simple Agent
 
-This agent uses a few very simple function tools,
+These agents uses a few very simple function tools,
 but this demonstrates how the agent chooses which tools to call
 based on what the user asked.
 
 ```shell
 uv run python ./agent1.py
+uv run python ./agent2.py
 ```
 
 ## References
