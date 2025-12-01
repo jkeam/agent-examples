@@ -21,7 +21,14 @@ Running ollama locally with Llamastack Server.
 2. Wrap model with Llama Server in another terminal
 
     ```shell
-    ./start-llama-ollama.sh
+    export OLLAMA_HOST="YOUR_IP_ADDRESS"
+    podman run -d --rm --name llama-server -it \
+     --user 1001 \
+     -v ~/.llama:/root/.llama:z \
+     --network=host \
+     -e OLLAMA_URL=http://$OLLAMA_HOST:11434 \
+     docker.io/llamastack/distribution-starter:0.3.3 \
+     --port 8321
     ```
 
 3. Verify
@@ -39,7 +46,13 @@ Running Llamastack Server as a facade to OpenAI.
 
 ```shell
 export OPENAI_API_KEY="YOUR_ACTUAL_OPENAI_API_KEY"
-./start-llama-openai.sh
+podman run -d --rm --name llama-server -it \
+ --user 1001 \
+ -v ~/.llama:/root/.llama:z \
+ --network=host \
+ -e OPENAI_API_KEY=$OPENAI_API_KEY \
+ docker.io/llamastack/distribution-starter:0.3.3 \
+ --port 8321
 ```
 
 ## References
