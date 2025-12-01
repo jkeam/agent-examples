@@ -31,15 +31,6 @@ Running ollama locally with Llamastack Server.
      --port 8321
     ```
 
-3. Verify
-
-    ```shell
-    # test model
-    uv run llama-stack-client configure --endpoint http://localhost:8321 --api-key none
-    # see all models
-    uv run llama-stack-client models list
-    ```
-
 #### OpenAI Facade
 
 Running Llamastack Server as a facade to OpenAI.
@@ -53,6 +44,15 @@ podman run -d --rm --name llama-server -it \
  -e OPENAI_API_KEY=$OPENAI_API_KEY \
  docker.io/llamastack/distribution-starter:0.3.3 \
  --port 8321
+```
+
+#### Verification
+
+```shell
+# test api endpoint
+uv run llama-stack-client configure --endpoint http://localhost:8321 --api-key none
+# see all models
+uv run llama-stack-client models list
 ```
 
 ## References
