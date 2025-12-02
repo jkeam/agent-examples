@@ -46,6 +46,21 @@ podman run -d --rm --name llama-server -it \
  --port 8321
 ```
 
+Or if you want to run `agent3.py` that can perform searches:
+
+```shell
+export OPENAI_API_KEY="YOUR_ACTUAL_OPENAI_API_KEY"
+export TAVILY_SEARCH_API_KEY="YOUR_ACTUAL_TAVILY_API_KEY"
+podman run -d --rm --name llama-server -it \
+ --user 1001 \
+ -v ~/.llama:/root/.llama:z \
+ --network=host \
+ -e OPENAI_API_KEY=$OPENAI_API_KEY \
+ -e TAVILY_SEARCH_API_KEY=$TAVILY_SEARCH_API_KEY \
+ docker.io/llamastack/distribution-starter:0.3.3 \
+ --port 8321
+```
+
 #### Verification
 
 ```shell
@@ -59,15 +74,16 @@ uv run llama-stack-client models list
 
 All of the client examples below require that the Llama Stack server is running.
 
-#### Simple Agent
+#### Simple Agents
 
 These agents use very simple function tools,
 but demonstrates how the agents choose which tools to call
 based on what the user asked.
 
 ```shell
-uv run python ./agent1.py
-uv run python ./agent2.py
+uv run python ./agent1.py  # client functions as tools
+uv run python ./agent2.py  # client functions as tools, order dependent
+uv run python ./agent3.py  # remote mcp server triggering tavily web search
 ```
 
 ## References
